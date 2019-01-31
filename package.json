@@ -1,0 +1,61 @@
+{
+  "name": "courses-webpack-edteam",
+  "version": "1.0.0",
+  "description": "Cursos De Webpack Edteam 2018",
+  "main": "index.js",
+  "scripts": {
+    "build": "better-npm-run build",
+    "start": "webpack-dev-server"
+  },
+  "betterScripts": {
+    "build": {
+      "command": "webpack --progress --colors",
+      "env": {
+        "MODE": "production"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JySa65/courses-webpack.git"
+  },
+  "author": "Junior Sanchez <r.a.s.g65@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JySa65/courses-webpack/issues"
+  },
+  "homepage": "https://github.com/JySa65/courses-webpack#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "autoprefixer": "^9.4.7",
+    "babel-loader": "^8.0.5",
+    "babel-preset-react": "^6.24.1",
+    "better-npm-run": "^0.1.1",
+    "clean-webpack-plugin": "^1.0.1",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.6.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
+    "resolve-url-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "vue-loader": "^15.6.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.5.22",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "vue": "^2.5.22"
+  }
+}

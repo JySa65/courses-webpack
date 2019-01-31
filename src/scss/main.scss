@@ -1,0 +1,53 @@
+@font-face {
+  font: {
+    family: 'Chalet';
+    style: normal;
+    weight: normal;
+  }
+  src: url(./fonts/Chalet.eot);
+  src: url(./fonts/Chalet.eot?#iefix) format('embedded-opentype'),
+    url(./fonts/Chalet.woff) format('woff'),
+    url(./fonts/Chalet.ttf) format('truetype'),
+    url(./fonts/Chalet.svg#Chalet) format('svg');
+}
+
+html {
+  color: #FFF;
+  background: {
+    color: #2B3A42;
+    repeat: repeat;
+    image: url('./img/webpack-cube.svg');
+    position: center;
+    attachment: fixed;
+    size: 10%;
+  }
+}
+
+img {
+  display: block;
+  max-width: 300px;
+  height: auto;
+}
+
+#app {
+  margin: auto;
+  padding: 2rem;
+  width: 80%;
+  min-height: 100vh;
+  text-align: center;
+  background-color: rgba($color: #2b3a42, $alpha: .9);
+
+  * { margin: 2rem auto; }
+}
+
+.Menu {
+  display: flex;
+  justify-content: space-evenly;
+
+  a {
+    color: #8DD6FB;
+    transition: all .3s ease;
+
+    &:hover { opacity: .75 }
+  }
+}
