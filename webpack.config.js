@@ -3,9 +3,43 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const autoprefixer = require('autoprefixer')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const { VueLoaderPlugin } = require('vue-loader')
 
 const MODE = process.env.MODE || 'development'
+
+const cleanWebpackPlugin = new CleanWebpackPlugin(['dist/**/*.*'])
+const miniCssExtractPlugin = new MiniCssExtractPlugin({
+  filename: 'css/[name].[chunkhash].css',
+  chunkFilename: '[id].css'
+})
+const vueLoaderPlugin = new VueLoaderPlugin()
+const optimizeCSSAssetsPlugin = new OptimizeCSSAssetsPlugin({})
+const htmlPluginIndex = new HtmlWebpackPlugin({
+  template: './src/template.html',
+  filename: 'index.html',
+  chunks: ['js']
+})
+const htmlPluginVanilla = new HtmlWebpackPlugin({
+  template: './src/template.html',
+  filename: 'hello-vanilla.html',
+  chunks: ['vanilla']
+})
+const htmlPluginReact = new HtmlWebpackPlugin({
+  template: './src/template.html',
+  filename: 'hello-react.html',
+  chunks: ['react']
+})
+const htmlPluginVue = new HtmlWebpackPlugin({
+  template: './src/template.html',
+  filename: 'hello-vue.html',
+  chunks: ['vue']
+})
+const htmlPluginTs = new HtmlWebpackPlugin({
+  template: './src/template.html',
+  filename: 'hello-ts.html',
+  chunks: ['ts']
+})
 
 module.exports = {
   mode: MODE,
@@ -20,6 +54,7 @@ module.exports = {
     filename: 'js/[name].[chunkhash].js',
   },
   devtool: MODE != 'production' ? 'source-map' : '',
+
   module: {
     rules: [
       {
@@ -102,37 +137,10 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new CleanWebpackPlugin(['dist/**/*.*']),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].[chunkhash].css',
-      chunkFilename: '[id].css'
-    }),
-    new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/template.html',
-      filename: 'index.html',
-      chunks: ['js']
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/template.html',
-      filename: 'hello-vanilla.html',
-      chunks: ['vanilla']
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/template.html',
-      filename: 'hello-react.html',
-      chunks: ['react']
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/template.html',
-      filename: 'hello-vue.html',
-      chunks: ['vue']
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/template.html',
-      filename: 'hello-ts.html',
-      chunks: ['ts']
-    })
-  ]
+  plugins: MODE != 'production'
+    ? [vueLoaderPlugin, htmlPluginIndex, htmlPluginVanilla,
+        htmlPluginReact, htmlPluginVue, htmlPluginTs]
+    : [cleanWebpackPlugin, miniCssExtractPlugin, vueLoaderPlugin, 
+        optimizeCSSAssetsPlugin, htmlPluginIndex, htmlPluginVanilla, 
+        htmlPluginReact, htmlPluginVue, htmlPluginTs]
 }
