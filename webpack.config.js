@@ -17,9 +17,9 @@ module.exports = {
     ts: './src/hello_ts.js'
   },
   output: {
-    filename: '[name].[chunkhash].js'
+    filename: 'js/[name].[chunkhash].js',
   },
-  devtool: 'source-map',
+  devtool: MODE != 'production' ? 'source-map' : '',
   module: {
     rules: [
       {
@@ -41,9 +41,15 @@ module.exports = {
       {
         test: /\.(css|scss)$/,
         use: [
-          {
-            loader: MODE != 'production' ? 'style-loader' : MiniCssExtractPlugin.loader
-          },
+          MODE != 'production'
+            ? 'style-loader'
+            : {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '../'
+              }
+            },
+
           {
             loader: 'css-loader',
             options: {
@@ -72,13 +78,13 @@ module.exports = {
       {
         test: /\.(jpe?g|png|gif|svg|webp)$/i,
         use: [
-          'file-loader?name=assets/[name].[ext]',
+          'file-loader?name=assets/img/[hash].[ext]',
           'image-webpack-loader?bypassOnDebug'
         ]
       },
       {
         test: /\.(ttf|eot|woff2?|mp4|mp3|txt|xml|pdf)$/i,
-        use: 'file-loader?name=assets/[name].[ext]'
+        use: 'file-loader?name=assets/fonts/[hash].[ext]'
       },
       {
         test: /\.vue$/,
@@ -99,7 +105,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist/**/*.*']),
     new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css',
+      filename: 'css/[name].[chunkhash].css',
       chunkFilename: '[id].css'
     }),
     new VueLoaderPlugin(),

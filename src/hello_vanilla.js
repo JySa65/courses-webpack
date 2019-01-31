@@ -1,6 +1,6 @@
 import style from './style.css'
 import sass from './scss/main.scss'
-import logo from './img/webpack-logo.svg'
+import logo from './img/js-logo.png'
 import data from './data.json'
 import { HelloWorld } from './components/App'
 
