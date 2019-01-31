@@ -7,38 +7,6 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 const MODE = process.env.MODE || 'development'
 
-const cleanWebpackPlugin = new CleanWebpackPlugin(['dist/**/*.*'])
-const extractCssPlugin = new MiniCssExtractPlugin({
-    filename: '[name].[chunkhash].css',
-    chunkFilename: '[id].css'
-  })
-const vueLoaderPlugin = new VueLoaderPlugin()
-const htmlPluginJs = new HtmlWebpackPlugin({
-    template: './src/template.html',
-    filename: 'index.html',
-    chunks: ['js']
-  })
-const htmlPluginVanilla = new HtmlWebpackPlugin({
-    template: './src/template.html',
-    filename: 'hello-vanilla.html',
-    chunks: ['vanilla']
-  })
-const htmlPluginReact = new HtmlWebpackPlugin({
-    template: './src/template.html',
-    filename: 'hello-react.html',
-    chunks: ['react']
-  })
-const htmlPluginVue = new HtmlWebpackPlugin({
-    template: './src/template.html',
-    filename: 'hello-vue.html',
-    chunks: ['vue']
-  })
-const htmlPluginTs = new HtmlWebpackPlugin({
-    template: './src/template.html',
-    filename: 'hello-ts.html',
-    chunks: ['ts']
-  })
-
 module.exports = {
   mode: MODE,
   entry: {
@@ -74,21 +42,31 @@ module.exports = {
         test: /\.(css|scss)$/,
         use: [
           {
-            loader: MODE == 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
+            loader: MODE != 'production' ? 'style-loader' : MiniCssExtractPlugin.loader
           },
-          'css-loader?minimize&sourceMap',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: MODE != 'production',
+            }
+          },
           {
             loader: 'postcss-loader',
             options: {
               autoprefixer: {
                 browser: ['last 2 versions']
               },
-              sourceMap: true,
+              sourceMap: MODE != 'production',
               plugins: () => [autoprefixer]
             }
           },
           'resolve-url-loader',
-          'sass-loader?outputStyle=compressed&sourceMap'
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: MODE != 'production',
+            }
+          }
         ]
       },
       {
@@ -119,13 +97,36 @@ module.exports = {
     ]
   },
   plugins: [
-    cleanWebpackPlugin,
-    extractCssPlugin,
-    vueLoaderPlugin,
-    htmlPluginJs,
-    htmlPluginVanilla,
-    htmlPluginReact,
-    htmlPluginVue,
-    htmlPluginTs
+    new CleanWebpackPlugin(['dist/**/*.*']),
+    new MiniCssExtractPlugin({
+      filename: '[name].[chunkhash].css',
+      chunkFilename: '[id].css'
+    }),
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+      filename: 'index.html',
+      chunks: ['js']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+      filename: 'hello-vanilla.html',
+      chunks: ['vanilla']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+      filename: 'hello-react.html',
+      chunks: ['react']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+      filename: 'hello-vue.html',
+      chunks: ['vue']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/template.html',
+      filename: 'hello-ts.html',
+      chunks: ['ts']
+    })
   ]
 }
